@@ -1,13 +1,11 @@
-import { Header } from "@/src/components/Header";
-
-// page.tsx (server) -> menu.tsx (server) -> link (client)
+import { SpinLoader } from "@/src/components/SpinLoader";
+import { PostsList } from "../components/PostsList";
+import { Suspense } from "react";
 
 export default async function HomePage() {
-  console.log("HomePage");
-
   return (
-    <div>
-      <Header />
-    </div>
+    <Suspense fallback={<SpinLoader />}>
+      <PostsList />
+    </Suspense>
   );
 }
