@@ -1,7 +1,7 @@
 import { PostRepository } from "./post-repository";
 import { resolve } from "path";
 import { readFile } from "fs/promises";
-import { PostModel } from "@/src/models/post/post-model";
+import { PostModel } from "@/models/post/post-model";
 
 const ROOT_DIR = process.cwd();
 const JSON_POSTS_FILE_PATH = resolve(
