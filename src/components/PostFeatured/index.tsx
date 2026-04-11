@@ -1,9 +1,13 @@
 import { PostCoverImage } from "../PostCoverImage";
-import { PostHeading } from "../PostHeading";
+import { PostSummary } from "../PostSummary";
+import { findAllPublicPostsCached } from "@/lib/post/queries";
 
-export function PostFeatured() {
-  const slug = 'x';
-  const postLink = `/post/${slug}`;
+export async function PostFeatured() {
+  const posts = await findAllPublicPostsCached();
+  const post = posts[0];
+
+  const postLink = `/post/${post.slug}`;
+
   return (
     <section className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group">
       <PostCoverImage
@@ -13,13 +17,19 @@ export function PostFeatured() {
         imageProps={{
           width: 1200,
           height: 720,
-          src: require("../../public/images/bryen_9.png").default,
-          alt: "alt",
+          src: post.coverImageUrl,
+          alt: post.title,
+          priority: true,
         }}
       />
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt qui
-      eaque autem illum maxime error ex laborum doloremque culpa, ipsa molestias
-      sint. Neque numquam eos nihil animi tenetur tempore optio.
+
+      <PostSummary
+        postLink={postLink}
+        postHeading="h1"
+        createdAt={post.createdAt}
+        excerpt={post.excerpt}
+        title={post.title}
+      />
     </section>
   );
 }
