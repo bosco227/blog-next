@@ -59,7 +59,7 @@ export class JsonPostRepository implements PostRepository {
     const post = posts.find((post) => post.slug === slug);
 
     if (!post) throw new Error("Post não encontrado para slug");
-
+    console.log(post);
     return post;
   }
 }

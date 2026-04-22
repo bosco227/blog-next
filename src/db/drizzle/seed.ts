@@ -1,23 +1,26 @@
 import { JsonPostRepository } from "@/repositories/post/json-post-repository";
-import { drizzleDb } from ".";
+import { drizzleDb } from "@/db/drizzle";
 import { postsTable } from "./schemas";
 
 (async () => {
+  console.log("🔥 SEED INICIADO");
+
   const jsonPostRepository = new JsonPostRepository();
   const posts = await jsonPostRepository.findAll();
 
-  try {
-    await drizzleDb.delete(postsTable); // ISSO LIMPA A BASE DE DADOS
-    await drizzleDb.insert(postsTable).values(posts);
+  const normalizedPosts = posts.map((post) => ({
+    ...post,
+    published: true, // 🔥 garante que vai aparecer
+    createdAt: post.createdAt || new Date().toISOString(),
+    updatedAt: post.updatedAt || new Date().toISOString(),
+  }));
 
-    console.log();
-    console.log(`${posts.length} posts foram salvos na base de dados.`);
-    console.log();
+  try {
+    await drizzleDb.delete(postsTable);
+    await drizzleDb.insert(postsTable).values(normalizedPosts);
+
+    console.log(`✅ ${normalizedPosts.length} posts inseridos`);
   } catch (e) {
-    console.log();
-    console.log("Ocorreu um erro...");
-    console.log();
-    console.log(e);
-    console.log();
+    console.error("❌ ERRO NO SEED:", e);
   }
 })();
