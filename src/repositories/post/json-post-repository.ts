@@ -36,9 +36,16 @@ export class JsonPostRepository implements PostRepository {
     return posts.filter((post) => post.published);
   }
 
-  async findById(id: string): Promise<PostModel> {
+  async findAll(): Promise<PostModel[]> {
     await this.simulateWait();
 
+    console.log("\n", "findAll", "\n");
+
+    const posts = await this.readFromDisk();
+    return posts;
+  }
+
+  async findById(id: string): Promise<PostModel> {
     const posts = await this.findAllPublic();
     const post = posts.find((post) => post.id === id);
 
@@ -46,9 +53,8 @@ export class JsonPostRepository implements PostRepository {
 
     return post;
   }
-  async findBySlug(slug: string): Promise<PostModel> {
-    await this.simulateWait();
 
+  async findBySlugPublic(slug: string): Promise<PostModel> {
     const posts = await this.findAllPublic();
     const post = posts.find((post) => post.slug === slug);
 
