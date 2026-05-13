@@ -1,4 +1,4 @@
-import PostsListAdmin from "@/components/PostListAdmin";
+import PostsListAdmin from "@/components/PostsListAdmin";
 import { SpinLoader } from "@/components/SpinLoader";
 import { Metadata } from "next";
 import { Suspense } from "react";
