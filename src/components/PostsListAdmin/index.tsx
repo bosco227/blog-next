@@ -1,8 +1,6 @@
 import { findAllPostsAdmin } from "@/lib/post/queries/admin";
 import Link from "next/link";
 import clsx from "clsx";
-import { Trash2Icon } from "lucide-react";
-import { deletePostAction } from "@/actions/post/delete-post-action";
 import { DeletePostButton } from "../DeletePostButton";
 
 export default async function PostsListAdmin() {
@@ -27,13 +25,54 @@ export default async function PostsListAdmin() {
                 (Não publicado)
               </span>
             )}
-            <form action={deletePostAction}>
-              <input type="hidden" name="id" defaultValue={post.id} />
-              <DeletePostButton id={post.id} title={post.title} />
-            </form>
+            <DeletePostButton id={post.id} title={post.title} />
           </div>
         );
       })}
+
+      <div
+        className={clsx(
+          "fixed z-50 inset-0 bg-black/50 backdrop-blur-xs",
+          "flex items-center justify-center",
+        )}
+      >
+        <div
+          className={clsx(
+            "bg-slate-100 p-6 rounded-lg max-w-2xl mx-6",
+            "flex flex-col gap-2",
+            "shadow-lg shadow-black/30 text-center",
+          )}
+        >
+          <h3 className="text-xl font-extrabold">Título do diálogo</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore,
+            harum impedit. Nostrum quia incidunt ipsam! Exercitationem unde
+            dolore, nobis ad ullam soluta distinctio alias id consequatur ex
+            minus reprehenderit quia!
+          </p>
+          <div className="flex items-center justify-around">
+            <button
+              className={clsx(
+                "bg=slate-300 hover:bg-slate-400 transition text-slate-950",
+                "flex items-center justify-center",
+                "py-2 px-4 rounded-lg cursor-pointer",
+              )}
+              autoFocus
+            >
+              Cancelar
+            </button>
+            <button
+              className={clsx(
+                "bg-blue-500 hover:bg-blue-600 transition text-blue-50",
+                "flex items-center justify-center",
+                "py-2 px-4 rounded-lg cursor-pointer",
+              )}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
